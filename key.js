@@ -1,46 +1,48 @@
+
 const letters = document.querySelectorAll('.letter');
 const textarea = document.getElementById('content');
 
+const sent = document.getElementById('send');
 const clickel = document.querySelector('.click');
-const keyel = document.querySelector('.keys')
+const keyel = document.querySelector('.keys');
 
-const spaceel = document.querySelector('#space')
-const backel = document.querySelector("#back")
+const infoel = document.querySelector('.info');
+const subel = document.querySelector('.sub');
+
+let index = 0;
+let movetime, longpress;
+let f = 0;
+let currentControl = 0;
 
 
+const controls = [
+    document.querySelector('.to input'),
+    document.querySelector('.subject input'),
+    textarea,
+    document.getElementById('send')
+];
 
-const infoel = document.querySelector('.info')
-
-const subel = document.querySelector('.sub')
-
-
-let index = 0
-var ar = []
-let movetime, displaytime;
-let f = 0
 function display() {
 
+    const current = letters[index].textContent;
 
-    // const crnt = letters[index].textContent
-    // console.log(crnt)
-    if (letters[index].textContent === "Backspace ") {
-
-        textarea.value = textarea.value.slice(0, -1)
-    }
-
-    else if (letters[index].textContent === "space") {
-
-        textarea.value += '  '
+    if (current === "Backspace ") {
+        controls[currentControl].value = controls[currentControl].value.slice(0, -1);
 
     }
-    else if (letters[index].textContent === "Tab") {
-        textarea.value += '     '
+    else if (current === "space") {
+        controls[currentControl].value += ' ';
     }
-    else if (letters[index].textContent === "Enter") {
-        textarea.value += '\n'
+    else if (current === "Tab") {
+        controls[currentControl].value += '\t';
+    }
+    else if (current === "Enter") {
+
+        controls[currentControl].value += '\n';
     }
 
-    else if (letters[index].textContent === "CapsLk") {
+    else if (current === "CapsLk") {
+
         if (f == 0) {
             f = 1
         }
@@ -48,54 +50,114 @@ function display() {
             f = 0
         }
     }
-    else if (letters[index].textContent === "Fn" || letters[index].textContent === "Cntrl" || letters[index].textContent === "alt" || letters[index].textContent === "Shift" || letters[index].textContent === "AltGr") {
-        textarea.value += ''
+
+    else if (["Fn", "Ctrl", "alt", "Shift", "AltGr"].includes(current)) {
+
     }
+
+    else if (current === "~") {
+        moveControl();
+
+    }
+
+
+    else if(current === 'Send')
+        {
+            clearContents()
+        }
     else {
 
         if (f == 1) {
-            textarea.value += letters[index].textContent.toUpperCase()
+            controls[currentControl].value += letters[index].textContent.toUpperCase()
         }
         else {
-            textarea.value += letters[index].textContent.toLowerCase()
+            controls[currentControl].value += letters[index].textContent.toLowerCase()
         }
     }
-    
-}    
+
+}
+
 
 function move() {
 
     letters[index].style.backgroundColor = 'white'
 
     index = (index + 1)
+
     if (index >= letters.length) {
         index = 0
     }
     letters[index].style.backgroundColor = 'skyblue'
 
-    console.log(letters[index].textContent)
+    // console.log(letters[index].textContent)
+
+}
+
+function moveControl() 
+{
+
+    controls[currentControl].focus();
+    console.log(currentControl,controls.length)
+    console.log(controls[currentControl])
+    currentControl = (currentControl + 1)
+  
+
+    if (currentControl == controls.length) {
+        currentControl = 0
+    }
 }
 
 
-       
+
 clickel.addEventListener('mouseover', () => {
-    movetime = setInterval(move, 1000)
 
-})
+    movetime = setInterval(move, 1500);
 
+});
 
 clickel.addEventListener('click', () => {
 
-    display()
+    display();
 
-}, 1000)
+}, 1500);
+
+// clickel.addEventListener('mousedown', () => {
+
+//     longpress = setTimeout(skipLine,1000); 
+
+// });
+
+// clickel.addEventListener('mouseup', () => {
+
+//     clearTimeout(longpress);
+
+// });
+
+function clearContents() {
+ controls[0].value=' '
+ controls[1].value=' '
+ controls[2].value=' '
+
+
+  alert("mail send successfully")
+}
 
 clickel.addEventListener('mouseleave', () => {
-    clearInterval(movetime)
 
+    clearInterval(movetime);
+    clearTimeout(longpress);
+
+});
+sent.addEventListener('click',()=>{
+    clearContents();
 })
+
+// send.addEventListener('click', () => {
+//     // console.log('ghf')
+//     clearContents();
+// });
 
 infoel.addEventListener('click', () => {
-    subel.style.display = subel.style.display === 'block' ? 'none' : 'block'
+    subel.style.display = subel.style.display === 'block' ? 'none' : 'block';
+});
 
-})
