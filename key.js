@@ -61,9 +61,21 @@ function display() {
     }
 
 
-    else if(current === 'Send')
+    else if(current === 'Sent')
         {
             clearContents()
+        }
+
+        else if (current === "@") {
+            
+            if (currentControl === 0)
+                 { 
+                controls[currentControl].value += "@gmail.com";
+            } 
+            // else 
+            // {
+            //     controls[currentControl].value += "@";
+            // }
         }
     else {
 
@@ -77,22 +89,20 @@ function display() {
 
 }
 
-
 function move() {
+   
+    letters.forEach(letter => {
+        letter.style.backgroundColor = ''; 
+    });
 
-    letters[index].style.backgroundColor = 'white'
+    index = index + 1 
+    if (index == letters.length)
+        {
+            index=0
+        }
 
-    index = (index + 1)
-
-    if (index >= letters.length) {
-        index = 0
-    }
-    letters[index].style.backgroundColor = 'skyblue'
-
-    // console.log(letters[index].textContent)
-
+    letters[index].style.backgroundColor = 'skyblue';
 }
-
 function moveControl() 
 {
 
@@ -121,17 +131,6 @@ clickel.addEventListener('click', () => {
 
 }, 1500);
 
-// clickel.addEventListener('mousedown', () => {
-
-//     longpress = setTimeout(skipLine,1000); 
-
-// });
-
-// clickel.addEventListener('mouseup', () => {
-
-//     clearTimeout(longpress);
-
-// });
 
 function clearContents() {
  controls[0].value=' '
@@ -139,7 +138,7 @@ function clearContents() {
  controls[2].value=' '
 
 
-  alert("mail send successfully")
+  alert("Mail sent successfully")
 }
 
 clickel.addEventListener('mouseleave', () => {
