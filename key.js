@@ -8,6 +8,8 @@ const keyel = document.querySelector('.keys');
 
 const infoel = document.querySelector('.info');
 const subel = document.querySelector('.sub');
+const crinfoel = document.querySelector('.info.sec');
+const crsubel = document.querySelector('.sub.sec');
 
 let index = 0;
 let movetime, longpress;
@@ -107,8 +109,11 @@ function moveControl()
 {
 
     controls[currentControl].focus();
+
     console.log(currentControl,controls.length)
+
     console.log(controls[currentControl])
+    
     currentControl = (currentControl + 1)
   
 
@@ -121,7 +126,7 @@ function moveControl()
 
 clickel.addEventListener('mouseover', () => {
 
-    movetime = setInterval(move, 1500);
+    movetime = setInterval(move, 1000);
 
 });
 
@@ -160,3 +165,6 @@ infoel.addEventListener('click', () => {
     subel.style.display = subel.style.display === 'block' ? 'none' : 'block';
 });
 
+crinfoel.addEventListener('click',()=>{
+    crsubel.style.display = crsubel.style.display === 'block' ? 'none' : 'block';cr
+})

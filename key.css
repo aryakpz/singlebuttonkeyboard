@@ -236,10 +236,17 @@ input:focus {
 }
 .sub ul{
     list-style-type: num;
+    font-size: 18px;
+    
     
     
 }
-
+.sub ul li{
+    padding-bottom: 10px;
+}
+.sub ul b{
+    text-decoration: underline;
+}
 #keysent{
     width:120px;
      background-color: rgb(23, 103, 128);
